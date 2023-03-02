@@ -14,6 +14,12 @@ public class RTSPlayer : NetworkBehaviour
         return myUnits;
     }
 
+    public bool CanPlaceUnit(CapsuleCollider unitCollider, Vector3 position)
+    {
+        // TODO: Update so player can only place units on their side of the field
+        return true;
+    }
+
     #region Server
 
     public override void OnStartServer()

@@ -60,7 +60,7 @@ public class UnitButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if (eventData.button != PointerEventData.InputButton.Left) { return; }
 
         unitPreviewInstance = Instantiate(unit.GetUnitPreview());
-        unitRendererInstance = unitPreviewInstance.GetComponent<Renderer>();
+        unitRendererInstance = unitPreviewInstance.GetComponentInChildren<Renderer>();
         unitPreviewInstance.SetActive(false);
     }
 
@@ -75,5 +75,9 @@ public class UnitButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             player.CmdTryPlaceUnit(unit.GetId(), hit.point);
             Destroy(unitPreviewInstance);
         }
+
+        // TODO: [BUG] Need to get the right renderer so preview color updates
+        Color color = player.CanPlaceUnit(unitCollider, hit.point) ? Color.green : Color.red;
+        unitRendererInstance.material.SetColor("_BaseColor", color);
     }
 }
