@@ -7,13 +7,37 @@ using UnityEngine.AI;
 
 public class Unit : NetworkBehaviour
 {
+    [SerializeField] Sprite icon = null;
+    [SerializeField] int price = 100;
+    [SerializeField] int id = -1;
     [SerializeField] Targeter targeter = null;
+    [SerializeField] GameObject unitPreview = null;
 
     public static event Action<Unit> ServerOnUnitSpawned;
     public static event Action<Unit> ServerOnUnitDespawned;
 
     public static event Action<Unit> AuthorityOnUnitSpawned;
     public static event Action<Unit> AuthorityOnUnitDespawned;
+
+    public Sprite GetIcon()
+    {
+        return icon;
+    }
+
+    public int GetPrice()
+    {
+        return price;
+    }
+
+    public int GetId()
+    {
+        return id;
+    }
+
+    public GameObject GetUnitPreview()
+    {
+        return unitPreview;
+    }
 
     #region Server
 

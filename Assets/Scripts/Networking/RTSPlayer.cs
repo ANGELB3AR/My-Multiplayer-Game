@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class RTSPlayer : NetworkBehaviour
 {
+    [SerializeField] Unit[] units = new Unit[0];
+
     [SerializeField] List<Unit> myUnits = new List<Unit>();
 
     public List<Unit> GetMyUnits()
@@ -38,6 +40,26 @@ public class RTSPlayer : NetworkBehaviour
         if (unit.connectionToClient.connectionId != connectionToClient.connectionId) { return; }
 
         myUnits.Remove(unit);
+    }
+
+    [Command]
+    public void CmdTryPlaceUnit(int unitId, Vector3 position)
+    {
+        Unit unitToPlace = null;
+
+        foreach (Unit unit in units)
+        {
+            if (unit.GetId() == unitId)
+            {
+                unitToPlace = unit;
+                break;
+            }
+        }
+
+        if (unitToPlace == null) { return; }
+
+        GameObject unitInstance = Instantiate(unitToPlace.gameObject, position, unitToPlace.transform.rotation);
+        NetworkServer.Spawn(unitInstance, connectionToClient);
     }
 
     #endregion
