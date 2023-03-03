@@ -5,7 +5,10 @@ using UnityEngine;
 
 public class CommandGiver : MonoBehaviour
 {
+    [SerializeField] Canvas commandGiverDisplay = null;
+
     RTSPlayer player;
+    
 
     private void Update()
     {

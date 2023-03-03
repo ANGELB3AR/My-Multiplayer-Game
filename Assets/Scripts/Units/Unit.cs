@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public class Unit : NetworkBehaviour
 {
@@ -12,6 +13,8 @@ public class Unit : NetworkBehaviour
     [SerializeField] int id = -1;
     [SerializeField] Targeter targeter = null;
     [SerializeField] GameObject unitPreview = null;
+    [SerializeField] UnityEvent onSelected = null;
+    [SerializeField] UnityEvent onDeselected = null;
 
     public static event Action<Unit> ServerOnUnitSpawned;
     public static event Action<Unit> ServerOnUnitDespawned;
@@ -68,6 +71,22 @@ public class Unit : NetworkBehaviour
     public override void OnStopAuthority()
     {
         AuthorityOnUnitDespawned?.Invoke(this);
+    }
+
+    [Client]
+    public void Select()
+    {
+        if (!isOwned) { return; }
+
+        onSelected?.Invoke();
+    }
+
+    [Client]
+    public void Deselect()
+    {
+        if (!isOwned) { return; }
+
+        onDeselected?.Invoke();
     }
 
     #endregion

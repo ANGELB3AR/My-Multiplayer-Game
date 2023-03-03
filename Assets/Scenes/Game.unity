@@ -180,6 +180,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02bec7cd0bf30d743b88c6046793cdd5, type: 3}
+--- !u!223 &366592108 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 7164965151118076855, guid: 020aaef208227224fa7353b016bbedb2, type: 3}
+  m_PrefabInstance: {fileID: 7164965151339965403}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &423309653
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1149,6 +1154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dc48f661a2307841ae02b406bf43756, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  commandGiverDisplay: {fileID: 366592108}
 --- !u!1001 &2085955427
 PrefabInstance:
   m_ObjectHideFlags: 0
