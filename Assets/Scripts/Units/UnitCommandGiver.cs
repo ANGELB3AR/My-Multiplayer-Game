@@ -34,4 +34,36 @@ public class UnitCommandGiver : MonoBehaviour
     {
         commandGiverDisplay.gameObject.SetActive(unitSelectionHandler.selectedUnits.Count >= 1);
     }
+
+    public void CommandUnitsToHold()
+    {
+        foreach (Unit selectedUnit in unitSelectionHandler.selectedUnits)
+        {
+            selectedUnit.unitMovement.SetIsTryingToMove(false);
+            selectedUnit.unitMovement.StopMoving();
+        }
+    }
+
+    public void CommandUnitsToAdvance()
+    {
+
+    }
+
+    public void CommandUnitsToDefend()
+    {
+
+    }
+
+    public void CommandUnitsToAttack()
+    {
+
+    }
+
+    public void CommandUnitsToMove()
+    {
+        foreach (Unit selectedUnit in unitSelectionHandler.selectedUnits)
+        {
+            selectedUnit.unitMovement.SetIsTryingToMove(true);
+        }
+    }
 }

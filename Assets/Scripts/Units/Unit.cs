@@ -11,10 +11,11 @@ public class Unit : NetworkBehaviour
     [SerializeField] Sprite icon = null;
     [SerializeField] int price = 100;
     [SerializeField] int id = -1;
-    [SerializeField] Targeter targeter = null;
     [SerializeField] GameObject unitPreview = null;
     [SerializeField] UnityEvent onSelected = null;
     [SerializeField] UnityEvent onDeselected = null;
+    public Targeter targeter { get; } = null;
+    public UnitMovement unitMovement { get; } = null;
 
     public static event Action<Unit> ServerOnUnitSpawned;
     public static event Action<Unit> ServerOnUnitDespawned;

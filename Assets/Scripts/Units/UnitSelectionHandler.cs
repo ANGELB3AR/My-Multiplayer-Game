@@ -74,6 +74,8 @@ public class UnitSelectionHandler : MonoBehaviour
         startPosition = Mouse.current.position.ReadValue();
 
         UpdateSelectionArea();
+
+        ClientOnUnitSelectionUpdated?.Invoke();
     }
 
     private void UpdateSelectionArea()

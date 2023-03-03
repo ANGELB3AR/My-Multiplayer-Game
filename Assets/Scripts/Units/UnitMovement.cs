@@ -1,4 +1,5 @@
 using Mirror;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,22 @@ public class UnitMovement : NetworkBehaviour
     [SerializeField] NavMeshAgent agent = null;
 
     Camera mainCamera;
+    bool isTryingToMove = false;
+
+    public bool GetIsTryingToMove()
+    {
+        return isTryingToMove;
+    }
+
+    public void SetIsTryingToMove(bool state)
+    {
+        isTryingToMove = state;
+    }
+
+    public void StopMoving()
+    {
+        agent.ResetPath();
+    }
 
     #region Server
 
@@ -34,6 +51,13 @@ public class UnitMovement : NetworkBehaviour
     private void Update()
     {
         if (!isOwned) { return; }
+        if (!isTryingToMove) { return; }
+        
+        ListenForNextPosition();
+    }
+
+    void ListenForNextPosition()
+    {
         if (!Mouse.current.leftButton.wasPressedThisFrame) { return; }
 
         Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
