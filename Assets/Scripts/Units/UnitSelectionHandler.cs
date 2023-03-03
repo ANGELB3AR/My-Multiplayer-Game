@@ -17,6 +17,8 @@ public class UnitSelectionHandler : MonoBehaviour
 
     public List<Unit> selectedUnits { get; } = new List<Unit>();
 
+    public event Action ClientOnUnitSelectionUpdated;
+
     private void Start()
     {
         mainCamera = Camera.main;
@@ -63,6 +65,8 @@ public class UnitSelectionHandler : MonoBehaviour
             }
 
             selectedUnits.Clear();
+
+            ClientOnUnitSelectionUpdated?.Invoke();
         }
 
         unitSelectionArea.gameObject.SetActive(true);
@@ -122,6 +126,8 @@ public class UnitSelectionHandler : MonoBehaviour
                 unit.Select();
             }
         }
+
+        ClientOnUnitSelectionUpdated?.Invoke();
     }
 
     void AuthorityHandleUnitDespawned(Unit unit)
