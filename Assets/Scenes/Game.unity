@@ -884,6 +884,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: RadialMenuButton (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3633987771570379535, guid: b5347618efca11d46942b3e1c85b900e, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 0.7647059
+      objectReference: {fileID: 0}
+    - target: {fileID: 3633987771570379535, guid: b5347618efca11d46942b3e1c85b900e, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 0.63529414
+      objectReference: {fileID: 0}
+    - target: {fileID: 3633987771570379535, guid: b5347618efca11d46942b3e1c85b900e, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.r
+      value: 0.37254903
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5347618efca11d46942b3e1c85b900e, type: 3}
 --- !u!1001 &1659091927
@@ -1120,6 +1132,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5347618efca11d46942b3e1c85b900e, type: 3}
+--- !u!1 &2064559769 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7164965149611476290, guid: 020aaef208227224fa7353b016bbedb2, type: 3}
+  m_PrefabInstance: {fileID: 7164965151339965403}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2064559771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2064559769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dc48f661a2307841ae02b406bf43756, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2085955427
 PrefabInstance:
   m_ObjectHideFlags: 0
