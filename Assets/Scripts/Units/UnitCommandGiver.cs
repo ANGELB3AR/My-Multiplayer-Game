@@ -1,8 +1,10 @@
 using Mirror;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 public class UnitCommandGiver : MonoBehaviour
 {
@@ -11,28 +13,20 @@ public class UnitCommandGiver : MonoBehaviour
 
     RTSPlayer player;
 
-    private void OnEnable()
-    {
-        unitSelectionHandler.ClientOnUnitSelectionUpdated += ClientHandleUnitSelectionUpdated;
-    }
-
-    private void OnDisable()
-    {
-        unitSelectionHandler.ClientOnUnitSelectionUpdated -= ClientHandleUnitSelectionUpdated;
-    }
-
     private void Update()
     {
         if (player == null)
         {
             player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
         }
+
+        if (!Mouse.current.rightButton.wasPressedThisFrame) { return; }
+        ToggleCommandGiverDisplay();
     }
 
-    [Client]
-    void ClientHandleUnitSelectionUpdated()
+    void ToggleCommandGiverDisplay()
     {
-        commandGiverDisplay.gameObject.SetActive(unitSelectionHandler.selectedUnits.Count >= 1);
+        commandGiverDisplay.gameObject.SetActive(unitSelectionHandler.selectedUnits.Count > 0);
     }
 
     public void CommandUnitsToHold()
