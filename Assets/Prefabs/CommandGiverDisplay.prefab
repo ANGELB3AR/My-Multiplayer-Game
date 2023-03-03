@@ -311,7 +311,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 2147483647
 --- !u!1 &9068279328815171057
 GameObject:
   m_ObjectHideFlags: 0
