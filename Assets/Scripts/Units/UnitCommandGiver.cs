@@ -59,5 +59,7 @@ public class UnitCommandGiver : MonoBehaviour
         {
             selectedUnit.unitMovement.SetIsTryingToMove(true);
         }
+
+        commandGiverDisplay.gameObject.SetActive(false);
     }
 }

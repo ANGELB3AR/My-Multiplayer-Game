@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class UnitSelectionHandler : MonoBehaviour
@@ -55,6 +56,9 @@ public class UnitSelectionHandler : MonoBehaviour
 
     private void StartSelectionArea()
     {
+        // Returns if clicking on UI elements
+        if (EventSystem.current.IsPointerOverGameObject()) { return; }
+
         if (!Keyboard.current.leftShiftKey.isPressed)
         {
             foreach (Unit selectedUnit in selectedUnits)
