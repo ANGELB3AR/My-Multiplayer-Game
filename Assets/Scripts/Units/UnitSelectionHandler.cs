@@ -10,13 +10,17 @@ public class UnitSelectionHandler : MonoBehaviour
 {
     [SerializeField] RectTransform unitSelectionArea = null;
     [SerializeField] LayerMask layerMask = new LayerMask();
+    [SerializeField] List<Unit> selectedUnits = new List<Unit>();
 
     Vector2 startPosition;
 
     RTSPlayer player;
     Camera mainCamera;
 
-    public List<Unit> selectedUnits { get; } = new List<Unit>();
+    public List<Unit> GetSelectedUnits()
+    {
+        return selectedUnits;
+    }
 
     private void Start()
     {
@@ -67,6 +71,18 @@ public class UnitSelectionHandler : MonoBehaviour
             }
 
             selectedUnits.Clear();
+
+            Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, layerMask))
+            {
+                if (hit.transform.gameObject.TryGetComponent<Unit>(out Unit unit))
+                {
+                    selectedUnits.Add(unit);
+                    unit.Select();
+                    return;
+                }
+            }
         }
 
         unitSelectionArea.gameObject.SetActive(true);

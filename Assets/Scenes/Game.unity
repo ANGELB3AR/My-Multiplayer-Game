@@ -973,7 +973,8 @@ MonoBehaviour:
   unitSelectionArea: {fileID: 1778627142}
   layerMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 264
+  selectedUnits: []
 --- !u!1 &1902521950
 GameObject:
   m_ObjectHideFlags: 0

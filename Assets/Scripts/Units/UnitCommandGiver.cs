@@ -13,6 +13,7 @@ public class UnitCommandGiver : MonoBehaviour
 
     RTSPlayer player;
 
+    [ClientCallback]
     private void Update()
     {
         if (player == null)
@@ -26,14 +27,15 @@ public class UnitCommandGiver : MonoBehaviour
 
     void ToggleCommandGiverDisplay()
     {
-        commandGiverDisplay.gameObject.SetActive(unitSelectionHandler.selectedUnits.Count > 0);
+        if (unitSelectionHandler.GetSelectedUnits().Count == 0) { return; }
+
+        commandGiverDisplay.gameObject.SetActive(!commandGiverDisplay.isActiveAndEnabled);
     }
 
     public void CommandUnitsToHold()
     {
-        foreach (Unit selectedUnit in unitSelectionHandler.selectedUnits)
+        foreach (Unit selectedUnit in unitSelectionHandler.GetSelectedUnits())
         {
-            selectedUnit.unitMovement.SetIsTryingToMove(false);
             selectedUnit.unitMovement.StopMoving();
         }
     }
@@ -55,11 +57,9 @@ public class UnitCommandGiver : MonoBehaviour
 
     public void CommandUnitsToMove()
     {
-        foreach (Unit selectedUnit in unitSelectionHandler.selectedUnits)
+        foreach (Unit selectedUnit in unitSelectionHandler.GetSelectedUnits())
         {
-            selectedUnit.unitMovement.SetIsTryingToMove(true);
-        }
 
-        commandGiverDisplay.gameObject.SetActive(false);
+        }
     }
 }
