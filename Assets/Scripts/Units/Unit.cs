@@ -14,8 +14,11 @@ public class Unit : NetworkBehaviour
     [SerializeField] GameObject unitPreview = null;
     [SerializeField] UnityEvent onSelected = null;
     [SerializeField] UnityEvent onDeselected = null;
-    public Targeter targeter { get; } = null;
-    public UnitMovement unitMovement { get; } = null;
+
+    UnitState currentState = UnitState.Holding;
+
+    public Targeter targeter = null;
+    public UnitMovement unitMovement = null;
 
     public static event Action<Unit> ServerOnUnitSpawned;
     public static event Action<Unit> ServerOnUnitDespawned;
@@ -41,6 +44,34 @@ public class Unit : NetworkBehaviour
     public GameObject GetUnitPreview()
     {
         return unitPreview;
+    }
+
+    public void UpdateUnitState(UnitState newState)
+    {
+        currentState = newState;
+    }
+
+    [ClientCallback]
+    private void Update()
+    {
+        switch(currentState)
+        {
+            case UnitState.Holding:
+                // Code block
+                break;
+            case UnitState.Advancing:
+                // Code block
+                break;
+            case UnitState.Moving:
+                // Code block
+                break;
+            case UnitState.Attacking:
+                // Code block
+                break;
+            case UnitState.Defending:
+                // Code block
+                break;
+        }
     }
 
     #region Server
@@ -91,4 +122,13 @@ public class Unit : NetworkBehaviour
     }
 
     #endregion
+
+    public enum UnitState
+    {
+        Holding,
+        Advancing,
+        Defending,
+        Attacking,
+        Moving
+    }
 }

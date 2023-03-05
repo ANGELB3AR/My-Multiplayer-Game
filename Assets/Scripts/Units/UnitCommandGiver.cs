@@ -42,7 +42,11 @@ public class UnitCommandGiver : MonoBehaviour
 
     public void CommandUnitsToAdvance()
     {
-
+        foreach (Unit selectedUnit in unitSelectionHandler.GetSelectedUnits())
+        {
+            selectedUnit.GetComponent<UnitMovement>().CmdMoveForward();
+            ToggleCommandGiverDisplay();
+        }
     }
 
     public void CommandUnitsToDefend()
@@ -55,11 +59,11 @@ public class UnitCommandGiver : MonoBehaviour
 
     }
 
-    public void CommandUnitsToMove()
+    void CommandUnitsToMove(Vector3 position)
     {
         foreach (Unit selectedUnit in unitSelectionHandler.GetSelectedUnits())
         {
-
+            selectedUnit.unitMovement.CmdMoveToPosition(position);
         }
     }
 }

@@ -9,6 +9,7 @@ using UnityEngine.InputSystem;
 public class UnitMovement : NetworkBehaviour
 {
     [SerializeField] NavMeshAgent agent = null;
+    [SerializeField] float speed = 3f;
 
     Camera mainCamera;
 
@@ -20,16 +21,28 @@ public class UnitMovement : NetworkBehaviour
     #region Server
 
     [Command]
-    void CmdMove(Vector3 position)
+    public void CmdMoveToPosition(Vector3 position)
     {
         if (!NavMesh.SamplePosition(position, out NavMeshHit hit, 1f, NavMesh.AllAreas)) { return; }
 
         agent.SetDestination(hit.position);
     }
 
+    [Command]
+    public void CmdMoveForward()
+    {
+        agent.Move(gameObject.transform.forward * Time.deltaTime * speed);
+    }
+
     #endregion
 
     #region Client
+
+    [ClientCallback]
+    private void Update()
+    {
+        CmdMoveForward();
+    }
 
     public override void OnStartAuthority()
     {
