@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-public class UnitCommandGiver : MonoBehaviour
+public class UnitCommandGiver : NetworkBehaviour
 {
     [SerializeField] Canvas commandGiverDisplay = null;
     [SerializeField] UnitSelectionHandler unitSelectionHandler = null;
@@ -76,6 +76,8 @@ public class UnitCommandGiver : MonoBehaviour
         if (!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, targetMask)) { return; }
 
         if (!hit.transform.gameObject.TryGetComponent<Targetable>(out Targetable target)) { return; }
+
+        if (connectionToClient.identity == target.transform.GetComponent<RTSPlayer>().connectionToClient.identity) { return; }
 
         foreach (Unit selectedUnit in unitSelectionHandler.GetSelectedUnits())
         {
