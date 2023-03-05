@@ -63,7 +63,7 @@ public class UnitCommandGiver : MonoBehaviour
         
         foreach (Unit selectedUnit in unitSelectionHandler.GetSelectedUnits())
         {
-            selectedUnit.unitMovement.CmdMoveToPosition(position);
+            selectedUnit.Move(position);
         }
 
         unitSelectionHandler.SetShouldLookForInput(true);
@@ -83,7 +83,7 @@ public class UnitCommandGiver : MonoBehaviour
 
         foreach (Unit selectedUnit in unitSelectionHandler.GetSelectedUnits())
         {
-            selectedUnit.targeter.SetTarget(target);
+            selectedUnit.Attack(target);
         }
 
         unitSelectionHandler.SetShouldLookForInput(true);
@@ -103,7 +103,7 @@ public class UnitCommandGiver : MonoBehaviour
 
         foreach (Unit selectedUnit in unitSelectionHandler.GetSelectedUnits())
         {
-            selectedUnit.unitMovement.CmdMoveToPosition(defendant.transform.position);
+            selectedUnit.Move(defendant.transform.position);
         }
 
         unitSelectionHandler.SetShouldLookForInput(true);
@@ -126,7 +126,7 @@ public class UnitCommandGiver : MonoBehaviour
     {
         foreach (Unit selectedUnit in unitSelectionHandler.GetSelectedUnits())
         {
-            selectedUnit.unitMovement.StopMoving();
+            selectedUnit.Hold();
         }
 
         commandGiverDisplay.gameObject.SetActive(false);

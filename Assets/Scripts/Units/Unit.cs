@@ -17,8 +17,8 @@ public class Unit : NetworkBehaviour
 
     UnitState currentState = UnitState.Holding;
 
-    public Targeter targeter = null;
-    public UnitMovement unitMovement = null;
+    Targeter targeter = null;
+    UnitMovement unitMovement = null;
 
     public static event Action<Unit> ServerOnUnitSpawned;
     public static event Action<Unit> ServerOnUnitDespawned;
