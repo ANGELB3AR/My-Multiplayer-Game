@@ -57,6 +57,7 @@ public class Unit : NetworkBehaviour
     {
         if (NetworkClient.connection.identity != connectionToClient.identity) { return; }
 
+        unitMovement.StopMoving();
         UpdateUnitState(UnitState.Holding);
     }
 
@@ -82,7 +83,7 @@ public class Unit : NetworkBehaviour
     {
         if (NetworkClient.connection.identity != connectionToClient.identity) { return; }
 
-        // Pass target to Targeter
+        targeter.SetTarget(target);
         UpdateUnitState(UnitState.Attacking);
     }
 
@@ -103,19 +104,26 @@ public class Unit : NetworkBehaviour
         switch(newState)
         {
             case UnitState.Holding:
-                // Code block
+                // If unit gets attacked, defend itself but don't leave this spot
                 break;
             case UnitState.Advancing:
-                // Code block
+                // Keep moving forward
+                // If unit comes near an enemy, attack it and keep moving forward
+                // If attacked, defend itself and keep moving forward
+                // If unit gets to the enemy's turrets or base then attack them
                 break;
             case UnitState.Moving:
-                // Code block
+                // Move to a specific position
+                // Do not engage in battle until the unit reaches its destination
                 break;
             case UnitState.Attacking:
-                // Code block
+                // Attack a specific enemy
+                // Once the enemy is dead then switch to holding state
                 break;
             case UnitState.Defending:
-                // Code block
+                // Move to be within the vicinity of the unitToDefend
+                // Attack any enemy that comes near but never leave the unitToDefend
+                // Also need to follow the unitToDefend if it ever moves
                 break;
         }
     }

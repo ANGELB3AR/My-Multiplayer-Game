@@ -135,7 +135,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6861643879601390451}
   m_Layer: 0
-  m_Name: BuildingsDisplay
+  m_Name: UnitsDisplay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

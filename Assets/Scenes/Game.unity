@@ -1196,7 +1196,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5817796996883432987, guid: 01e87297278a3dc45850406d5635cd48, type: 3}
       propertyPath: m_Name
-      value: BuildingsDisplay
+      value: UnitsDisplay
       objectReference: {fileID: 0}
     - target: {fileID: 6339845687874114349, guid: 01e87297278a3dc45850406d5635cd48, type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
@@ -1307,7 +1307,7 @@ PrefabInstance:
     - target: {fileID: 2950734653600245469, guid: 996b3cb600bdc5449b0ac485d0bf91d8, type: 3}
       propertyPath: unit
       value: 
-      objectReference: {fileID: 5434677596683948187, guid: 404eff3127e27d949aee76a5e522fff3, type: 3}
+      objectReference: {fileID: 1320319144322267924, guid: 2cbe8c1719a243c4eb67c3f2146f5126, type: 3}
     - target: {fileID: 6467016358416805325, guid: 996b3cb600bdc5449b0ac485d0bf91d8, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
