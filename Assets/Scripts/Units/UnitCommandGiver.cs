@@ -25,7 +25,6 @@ public class UnitCommandGiver : MonoBehaviour
     [ClientCallback]
     private void Update()
     {
-        Debug.Log(currentState);
         if (player == null)
         {
             player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
@@ -46,6 +45,9 @@ public class UnitCommandGiver : MonoBehaviour
                 break;
             case CommandGiverState.LookingForTargetInput:
                 LookForTargetInput();
+                break;
+            case CommandGiverState.LookingForDefendantInput:
+                LookForDefendantInput();
                 break;
         }
     }
@@ -77,11 +79,31 @@ public class UnitCommandGiver : MonoBehaviour
 
         if (!hit.transform.gameObject.TryGetComponent<Targetable>(out Targetable target)) { return; }
 
-        if (player.connectionToClient.identity == target.transform.GetComponent<RTSPlayer>().connectionToClient.identity) { return; }
+        //if (player.connectionToClient.identity == target.transform.GetComponent<RTSPlayer>().connectionToClient.identity) { return; }
 
         foreach (Unit selectedUnit in unitSelectionHandler.GetSelectedUnits())
         {
             selectedUnit.targeter.SetTarget(target);
+        }
+
+        unitSelectionHandler.SetShouldLookForInput(true);
+        currentState = CommandGiverState.WaitingForCommand;
+    }
+
+    void LookForDefendantInput()
+    {
+        if (!Mouse.current.leftButton.wasPressedThisFrame) { return; }
+
+        Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
+        if (!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, targetMask)) { return; }
+
+        if (!hit.transform.gameObject.TryGetComponent<Defendable>(out Defendable defendant)) { return; }
+
+        //if (player.connectionToClient.identity != defendant.transform.GetComponent<RTSPlayer>().connectionToClient.identity) { return; }
+
+        foreach (Unit selectedUnit in unitSelectionHandler.GetSelectedUnits())
+        {
+            selectedUnit.unitMovement.CmdMoveToPosition(defendant.transform.position);
         }
 
         unitSelectionHandler.SetShouldLookForInput(true);
@@ -121,7 +143,9 @@ public class UnitCommandGiver : MonoBehaviour
 
     public void CommandUnitsToDefend()
     {
-
+        unitSelectionHandler.SetShouldLookForInput(false);
+        commandGiverDisplay.gameObject.SetActive(false);
+        currentState = CommandGiverState.LookingForDefendantInput;
     }
 
     public void CommandUnitsToAttack()
