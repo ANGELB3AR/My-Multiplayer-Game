@@ -17,6 +17,7 @@ public class UnitMovement : NetworkBehaviour
     public void StopMoving()
     {
         agent.ResetPath();
+        isAdvancing = false;
     }
 
     #region Server
@@ -26,13 +27,16 @@ public class UnitMovement : NetworkBehaviour
     {
         if (!NavMesh.SamplePosition(position, out NavMeshHit hit, 1f, NavMesh.AllAreas)) { return; }
 
+        agent.ResetPath();
+        isAdvancing = false;
         agent.SetDestination(hit.position);
     }
 
     [Command]
     public void CmdMoveForward()
     {
-        agent.Move(gameObject.transform.forward * Time.deltaTime * speed);
+        agent.ResetPath();
+        isAdvancing = true;
     }
 
     #endregion
@@ -43,12 +47,19 @@ public class UnitMovement : NetworkBehaviour
     private void Update()
     {
         if (!isAdvancing) { return; }
-        CmdMoveForward();
+        Advance();
     }
 
     public override void OnStartAuthority()
     {
         mainCamera = Camera.main;
+    }
+
+    void Advance()
+    {
+        agent.ResetPath();
+        agent.transform.SetPositionAndRotation(transform.position, Quaternion.identity);
+        agent.Move(gameObject.transform.forward * Time.deltaTime * speed);
     }
 
     #endregion
