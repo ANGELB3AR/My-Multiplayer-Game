@@ -82,6 +82,8 @@ public class UnitCommandGiver : MonoBehaviour
         {
             selectedUnit.unitMovement.StopMoving();
         }
+
+        commandGiverDisplay.gameObject.SetActive(false);
     }
 
     public void CommandUnitsToAdvance()
