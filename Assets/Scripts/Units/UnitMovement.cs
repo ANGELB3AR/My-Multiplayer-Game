@@ -12,6 +12,7 @@ public class UnitMovement : NetworkBehaviour
     [SerializeField] float speed = 3f;
 
     Camera mainCamera;
+    bool isAdvancing = false;
 
     public void StopMoving()
     {
@@ -41,6 +42,7 @@ public class UnitMovement : NetworkBehaviour
     [ClientCallback]
     private void Update()
     {
+        if (!isAdvancing) { return; }
         CmdMoveForward();
     }
 

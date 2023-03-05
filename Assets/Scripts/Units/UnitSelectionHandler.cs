@@ -13,6 +13,7 @@ public class UnitSelectionHandler : MonoBehaviour
     [SerializeField] List<Unit> selectedUnits = new List<Unit>();
 
     Vector2 startPosition;
+    bool shouldLookForInput = true;
 
     RTSPlayer player;
     Camera mainCamera;
@@ -20,6 +21,16 @@ public class UnitSelectionHandler : MonoBehaviour
     public List<Unit> GetSelectedUnits()
     {
         return selectedUnits;
+    }
+
+    public bool GetShouldLookForInput()
+    {
+        return shouldLookForInput;
+    }
+
+    public void SetShouldLookForInput(bool state)
+    {
+        shouldLookForInput = state;
     }
 
     private void Start()
@@ -43,6 +54,8 @@ public class UnitSelectionHandler : MonoBehaviour
         {
             player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
         }
+
+        if (!shouldLookForInput) { return; }
 
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {

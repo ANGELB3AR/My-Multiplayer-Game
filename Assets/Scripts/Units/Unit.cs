@@ -46,6 +46,11 @@ public class Unit : NetworkBehaviour
         return unitPreview;
     }
 
+    public UnitState GetUnitState()
+    {
+        return currentState;
+    }
+
     [ClientCallback]
     private void Update()
     {
@@ -92,7 +97,7 @@ public class Unit : NetworkBehaviour
     {
         if (NetworkClient.connection.identity != connectionToClient.identity) { return; }
 
-        // Pass unitToDefend to Defender
+        // Pass unitToDefend to unitMovement
         UpdateUnitState(UnitState.Defending);
     }
 
@@ -115,6 +120,7 @@ public class Unit : NetworkBehaviour
             case UnitState.Moving:
                 // Move to a specific position
                 // Do not engage in battle until the unit reaches its destination
+                targeter.SetTarget(null);
                 break;
             case UnitState.Attacking:
                 // Attack a specific enemy
