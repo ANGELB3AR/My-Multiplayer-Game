@@ -77,7 +77,7 @@ public class UnitCommandGiver : MonoBehaviour
         Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
         if (!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, targetMask)) { return; }
 
-        if (!hit.transform.gameObject.TryGetComponent<Targetable>(out Targetable target)) { return; }
+        if (!hit.transform.gameObject.TryGetComponent(out Targetable target)) { return; }
 
         //if (player.connectionToClient.identity == target.transform.GetComponent<RTSPlayer>().connectionToClient.identity) { return; }
 
@@ -97,13 +97,13 @@ public class UnitCommandGiver : MonoBehaviour
         Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
         if (!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, targetMask)) { return; }
 
-        if (!hit.transform.gameObject.TryGetComponent<Defendable>(out Defendable defendant)) { return; }
+        if (!hit.transform.gameObject.TryGetComponent(out Defendable defendant)) { return; }
 
         //if (player.connectionToClient.identity != defendant.transform.GetComponent<RTSPlayer>().connectionToClient.identity) { return; }
 
         foreach (Unit selectedUnit in unitSelectionHandler.GetSelectedUnits())
         {
-            selectedUnit.Move(defendant.transform.position);
+            selectedUnit.Defend(defendant);
         }
 
         unitSelectionHandler.SetShouldLookForInput(true);

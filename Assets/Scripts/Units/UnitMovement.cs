@@ -32,6 +32,17 @@ public class UnitMovement : NetworkBehaviour
         agent.SetDestination(hit.position);
     }
 
+    
+    public void CmdMoveToVicinityOfDefendant(Defendable defendant)
+    {
+        if (!NavMesh.SamplePosition(defendant.gameObject.transform.position, out NavMeshHit hit, 1f, NavMesh.AllAreas)) { return; }
+
+        agent.ResetPath();
+        isAdvancing = false;
+        // TODO: Change this to some point on a unit circle around the defendant
+        agent.SetDestination(hit.position);
+    }
+
     [Command]
     public void CmdMoveForward()
     {

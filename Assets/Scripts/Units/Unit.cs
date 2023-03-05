@@ -62,6 +62,7 @@ public class Unit : NetworkBehaviour
     {
         if (NetworkClient.connection.identity != connectionToClient.identity) { return; }
 
+        targeter.SetTarget(null);
         unitMovement.StopMoving();
         UpdateUnitState(UnitState.Holding);
     }
@@ -79,6 +80,7 @@ public class Unit : NetworkBehaviour
     {
         if (NetworkClient.connection.identity != connectionToClient.identity) { return; }
 
+        targeter.SetTarget(null);
         unitMovement.CmdMoveToPosition(position);
         UpdateUnitState(UnitState.Advancing);
     }
@@ -89,6 +91,7 @@ public class Unit : NetworkBehaviour
         if (NetworkClient.connection.identity != connectionToClient.identity) { return; }
 
         targeter.SetTarget(target);
+        unitMovement.CmdMoveToPosition(target.transform.position);
         UpdateUnitState(UnitState.Attacking);
     }
 
@@ -97,7 +100,8 @@ public class Unit : NetworkBehaviour
     {
         if (NetworkClient.connection.identity != connectionToClient.identity) { return; }
 
-        // Pass unitToDefend to unitMovement
+        targeter.SetTarget(null);
+        unitMovement.CmdMoveToVicinityOfDefendant(unitToDefend);
         UpdateUnitState(UnitState.Defending);
     }
 
@@ -160,6 +164,9 @@ public class Unit : NetworkBehaviour
     public override void OnStartAuthority()
     {
         AuthorityOnUnitSpawned?.Invoke(this);
+
+        targeter = GetComponent<Targeter>();
+        unitMovement = GetComponent<UnitMovement>();
     }
 
     public override void OnStopAuthority()
