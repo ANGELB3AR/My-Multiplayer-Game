@@ -46,15 +46,61 @@ public class Unit : NetworkBehaviour
         return unitPreview;
     }
 
-    public void UpdateUnitState(UnitState newState)
-    {
-        currentState = newState;
-    }
-
     [ClientCallback]
     private void Update()
     {
-        switch(currentState)
+
+    }
+
+    [Client]
+    public void Hold()
+    {
+        if (NetworkClient.connection.identity != connectionToClient.identity) { return; }
+
+        UpdateUnitState(UnitState.Holding);
+    }
+
+    [Client]
+    public void Advance()
+    {
+        if (NetworkClient.connection.identity != connectionToClient.identity) { return; }
+
+        UpdateUnitState(UnitState.Advancing);
+    }
+
+    [Client]
+    public void Move(Vector3 position)
+    {
+        if (NetworkClient.connection.identity != connectionToClient.identity) { return; }
+
+        unitMovement.CmdMoveToPosition(position);
+        UpdateUnitState(UnitState.Advancing);
+    }
+
+    [Client]
+    public void Attack(Targetable target)
+    {
+        if (NetworkClient.connection.identity != connectionToClient.identity) { return; }
+
+        // Pass target to Targeter
+        UpdateUnitState(UnitState.Attacking);
+    }
+
+    [Client]
+    public void Defend(Defendable unitToDefend)
+    {
+        if (NetworkClient.connection.identity != connectionToClient.identity) { return; }
+
+        // Pass unitToDefend to Defender
+        UpdateUnitState(UnitState.Defending);
+    }
+
+    [Client]
+    void UpdateUnitState(UnitState newState)
+    {
+        currentState = newState;
+
+        switch(newState)
         {
             case UnitState.Holding:
                 // Code block
@@ -73,6 +119,8 @@ public class Unit : NetworkBehaviour
                 break;
         }
     }
+
+
 
     #region Server
 
