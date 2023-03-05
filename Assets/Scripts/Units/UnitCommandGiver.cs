@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-public class UnitCommandGiver : NetworkBehaviour
+public class UnitCommandGiver : MonoBehaviour
 {
     [SerializeField] Canvas commandGiverDisplay = null;
     [SerializeField] UnitSelectionHandler unitSelectionHandler = null;
@@ -77,7 +77,7 @@ public class UnitCommandGiver : NetworkBehaviour
 
         if (!hit.transform.gameObject.TryGetComponent<Targetable>(out Targetable target)) { return; }
 
-        if (connectionToClient.identity == target.transform.GetComponent<RTSPlayer>().connectionToClient.identity) { return; }
+        if (player.connectionToClient.identity == target.transform.GetComponent<RTSPlayer>().connectionToClient.identity) { return; }
 
         foreach (Unit selectedUnit in unitSelectionHandler.GetSelectedUnits())
         {
