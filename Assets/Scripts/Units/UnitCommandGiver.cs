@@ -11,6 +11,7 @@ public class UnitCommandGiver : MonoBehaviour
     [SerializeField] Canvas commandGiverDisplay = null;
     [SerializeField] UnitSelectionHandler unitSelectionHandler = null;
     [SerializeField] LayerMask floorMask = new LayerMask();
+    [SerializeField] LayerMask targetMask = new LayerMask();
 
     RTSPlayer player;
     Camera mainCamera;
@@ -43,6 +44,9 @@ public class UnitCommandGiver : MonoBehaviour
             case CommandGiverState.LookingForPositionInput:
                 LookForPositionInput();
                 break;
+            case CommandGiverState.LookingForTargetInput:
+                LookForTargetInput();
+                break;
         }
     }
 
@@ -58,6 +62,24 @@ public class UnitCommandGiver : MonoBehaviour
         foreach (Unit selectedUnit in unitSelectionHandler.GetSelectedUnits())
         {
             selectedUnit.unitMovement.CmdMoveToPosition(position);
+        }
+
+        unitSelectionHandler.SetShouldLookForInput(true);
+        currentState = CommandGiverState.WaitingForCommand;
+    }
+
+    void LookForTargetInput()
+    {
+        if (!Mouse.current.leftButton.wasPressedThisFrame) { return; }
+
+        Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
+        if (!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, targetMask)) { return; }
+
+        if (!hit.transform.gameObject.TryGetComponent<Targetable>(out Targetable target)) { return; }
+
+        foreach (Unit selectedUnit in unitSelectionHandler.GetSelectedUnits())
+        {
+            selectedUnit.targeter.SetTarget(target);
         }
 
         unitSelectionHandler.SetShouldLookForInput(true);
@@ -102,7 +124,9 @@ public class UnitCommandGiver : MonoBehaviour
 
     public void CommandUnitsToAttack()
     {
-
+        unitSelectionHandler.SetShouldLookForInput(false);
+        commandGiverDisplay.gameObject.SetActive(false);
+        currentState = CommandGiverState.LookingForTargetInput;
     }
 
     public void CommandUnitsToMove()
