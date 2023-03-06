@@ -101,7 +101,7 @@ public class Unit : NetworkBehaviour
         if (NetworkClient.connection.identity != connectionToClient.identity) { return; }
 
         targeter.SetTarget(null);
-        unitMovement.CmdMoveToVicinityOfDefendant(unitToDefend);
+        unitMovement.CmdMoveToVicinityOfDefendant(unitToDefend.transform.position);
         UpdateUnitState(UnitState.Defending);
     }
 

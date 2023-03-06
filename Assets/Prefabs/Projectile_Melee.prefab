@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 5516335156860899711}
   - component: {fileID: 5516335156860899704}
   - component: {fileID: 5516335156860899705}
+  - component: {fileID: 8471657119859258490}
+  - component: {fileID: 8291788589177072631}
   m_Layer: 0
   m_Name: Projectile_Melee
   m_TagString: Untagged
@@ -97,3 +99,36 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8471657119859258490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5516335156860899706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  _assetId: 2609274232
+  serverOnly: 0
+  visible: 0
+  hasSpawned: 0
+--- !u!114 &8291788589177072631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5516335156860899706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5271815119310444867ef189c5be124, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0.1
+  damage: 10
