@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerPositionUpdater : NetworkBehaviour
+public class PlayerCameraUpdater : NetworkBehaviour
 {
     public override void OnStartAuthority()
     {
