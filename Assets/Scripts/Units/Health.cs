@@ -11,6 +11,8 @@ public class Health : NetworkBehaviour
     [SyncVar(hook = nameof(HandleHealthUpdated))]
     int currentHealth;
 
+    public event Action ServerOnDie;
+
     public event Action<int, int> ClientOnHealthUpdated;
 
     private void Start()
@@ -20,7 +22,13 @@ public class Health : NetworkBehaviour
 
     public void DealDamage(int amountOfDamage)
     {
-        currentHealth = Mathf.Clamp(currentHealth - amountOfDamage, 0, maxHealth);
+        if (currentHealth == 0) { return; }
+
+        currentHealth = Mathf.Max(currentHealth - amountOfDamage, 0);
+
+        if (currentHealth != 0) { return; }
+
+        ServerOnDie?.Invoke();
     }
 
     void HandleHealthUpdated(int oldHealth, int newHealth)

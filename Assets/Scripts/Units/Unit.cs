@@ -51,6 +51,56 @@ public class Unit : NetworkBehaviour
         return currentState;
     }
 
+    #region Server
+
+    public override void OnStartServer()
+    {
+        ServerOnUnitSpawned?.Invoke(this);
+    }
+
+    public override void OnStopServer()
+    {
+        ServerOnUnitDespawned?.Invoke(this);
+    }
+
+    #endregion
+
+    #region Client
+
+    public override void OnStartClient()
+    {
+        gameObject.SetActive(true);
+    }
+
+    public override void OnStartAuthority()
+    {
+        AuthorityOnUnitSpawned?.Invoke(this);
+
+        targeter = GetComponent<Targeter>();
+        unitMovement = GetComponent<UnitMovement>();
+    }
+
+    public override void OnStopAuthority()
+    {
+        AuthorityOnUnitDespawned?.Invoke(this);
+    }
+
+    [Client]
+    public void Select()
+    {
+        if (!isOwned) { return; }
+
+        onSelected?.Invoke();
+    }
+
+    [Client]
+    public void Deselect()
+    {
+        if (!isOwned) { return; }
+
+        onDeselected?.Invoke();
+    }
+
     [ClientCallback]
     private void Update()
     {
@@ -110,7 +160,7 @@ public class Unit : NetworkBehaviour
     {
         currentState = newState;
 
-        switch(newState)
+        switch (newState)
         {
             case UnitState.Holding:
                 // If unit gets attacked, defend itself but don't leave this spot
@@ -136,58 +186,6 @@ public class Unit : NetworkBehaviour
                 // Also need to follow the unitToDefend if it ever moves
                 break;
         }
-    }
-
-
-
-    #region Server
-
-    public override void OnStartServer()
-    {
-        ServerOnUnitSpawned?.Invoke(this);
-    }
-
-    public override void OnStopServer()
-    {
-        ServerOnUnitDespawned?.Invoke(this);
-    }
-
-    #endregion
-
-    #region Client
-
-    public override void OnStartClient()
-    {
-        gameObject.SetActive(true);
-    }
-
-    public override void OnStartAuthority()
-    {
-        AuthorityOnUnitSpawned?.Invoke(this);
-
-        targeter = GetComponent<Targeter>();
-        unitMovement = GetComponent<UnitMovement>();
-    }
-
-    public override void OnStopAuthority()
-    {
-        AuthorityOnUnitDespawned?.Invoke(this);
-    }
-
-    [Client]
-    public void Select()
-    {
-        if (!isOwned) { return; }
-
-        onSelected?.Invoke();
-    }
-
-    [Client]
-    public void Deselect()
-    {
-        if (!isOwned) { return; }
-
-        onDeselected?.Invoke();
     }
 
     #endregion
