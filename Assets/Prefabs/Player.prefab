@@ -100,6 +100,7 @@ MonoBehaviour:
   syncInterval: 0.1
   units:
   - {fileID: 1320319144322267924, guid: 2cbe8c1719a243c4eb67c3f2146f5126, type: 3}
+  - {fileID: 8355929214469789559, guid: af26496dbe70264448099db5b3ebc641, type: 3}
   myUnits: []
 --- !u!114 &7561851519661986554
 MonoBehaviour:
