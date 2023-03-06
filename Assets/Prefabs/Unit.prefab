@@ -281,7 +281,7 @@ MonoBehaviour:
   syncInterval: 0.1
   target: {fileID: 0}
   attackRange: 2
-  projectilePrefab: {fileID: 0}
+  projectilePrefab: {fileID: 5516335156860899706, guid: 2aec41e07e2b9d24aa2cdeca194e90e6, type: 3}
   projectileSpawnPoint: {fileID: 2605812358490315036}
   fireRate: 1
 --- !u!114 &7230960338360171670
